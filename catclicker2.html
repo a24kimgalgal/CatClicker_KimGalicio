@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <title>Cat Clicker</title>
+</head>
+
+<body>
+    <h1>Cat Clicker</h1>
+    <p>Click the first cat, his name is Garfield!</p>
+    <img src="img/cat1.jpg" alt="Cat" id="cat1" style="width:400px;height:300px;">
+    <p>Clicks: <span id="clicks1">0</span></p>
+
+    <p>Or click the second cat, named Estel!</p>
+    <img src="img/cat2.avif" alt="Cat" id="cat2" style="width:400px;height:400px;">
+    <p>Clicks: <span id="clicks2">0</span></p>
+</body>
+
+<script>
+    let clicks1 = 0;
+    const cat1 = document.getElementById('cat1');
+    const clicksDisplay1 = document.getElementById('clicks1');
+
+    cat1.addEventListener('click', () => {
+        clicks1++;
+        clicksDisplay1.textContent = clicks1;
+    });
+
+    let clicks2 = 0;
+    const cat2 = document.getElementById('cat2');
+    const clicksDisplay2 = document.getElementById('clicks2');
+
+    cat2.addEventListener('click', () => {
+        clicks2++;
+        clicksDisplay2.textContent = clicks2;
+    });
+</script>
+
+</html>

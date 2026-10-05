@@ -6,14 +6,14 @@
 
 <body>
     <h1>Cat Clicker</h1>
-    <p>Click the cat!</p>
-    <img src="cat.jpg" alt="Cat" id="cat" style="width:400px;height:300px;">
+    <p>Click the first cat!</p>
+    <img src="img/cat1.jpg" alt="Cat" id="cat1" style="width:400px;height:300px;">
     <p>Clicks: <span id="clicks">0</span></p>
 </body>
 
 <script>
     let clicks = 0;
-    const cat = document.getElementById('cat');
+    const cat = document.getElementById('cat1');
     const clicksDisplay = document.getElementById('clicks');
 
     cat.addEventListener('click', () => {

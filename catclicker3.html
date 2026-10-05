@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>Cat Clicker</title>
+</head>
+
+<body>
+    <h1>Cat Clicker</h1>
+    <ul id="llista"></ul>
+</body>
+
+<script>
+
+    let data = {
+        catActive: 0,
+        cats: [
+            { name: "Garfield", img: "img/cat1.jpg", clicks: 0 },
+            { name: "Estel", img: "img/cat2.avif", clicks: 0 }
+        ]
+    }
+    
+    
+    htmlStr = ""
+    data.cats.forEach((cat, index) => {
+        htmlStr += `<li>${cat.name}</li>`
+    })
+    document.getElementById("llista").innerHTML = htmlStr
+
+
+    /* Versió amb "for"
+    for let(index = 0; index < data.cats.length; index++) {
+        const element = data.cats[index];  
+        htmlStr += `<li>${data.cats[index].name}</li>`
+    }
+    document.getElementById("llista").innerHTML = htmlStr
+    */
+</script>
+
+</html>
