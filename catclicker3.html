@@ -6,34 +6,66 @@
 
 <body>
     <h1>Cat Clicker</h1>
-    <ul id="llista"></ul>
+
+    <div class="layout">
+        <ul id="llista"></ul>
+
+        <div class="cat-panel">
+            <h3 id="catName">Cat name</h3>
+            <img id="imgCat" src="" alt="cat image" width="300px">
+            <p id="catClicks">Clicks: 0</p>
+        </div>
+    </div>
 </body>
 
 <script>
-
-    let data = {
+    const data = {
         catActive: 0,
         cats: [
             { name: "Garfield", img: "img/cat1.jpg", clicks: 0 },
-            { name: "Estel", img: "img/cat2.avif", clicks: 0 }
+            { name: "Estel", img: "img/cat2.avif", clicks: 0 },
+            { name: "Cato", img: "img/cat3.avif", clicks: 0 },
+            { name: "Limpa", img: "img/cat4.jpg", clicks: 0 },
+            { name: "Mochi", img: "img/cat1.jpg", clicks: 0 }
         ]
-    }
-    
-    
-    htmlStr = ""
-    data.cats.forEach((cat, index) => {
-        htmlStr += `<li>${cat.name}</li>`
-    })
-    document.getElementById("llista").innerHTML = htmlStr
+    };
 
+    const listElement = document.getElementById("llista");
+    const catNameElement = document.getElementById("catName");
+    const imgCatElement = document.getElementById("imgCat");
+    const catClicksElement = document.getElementById("catClicks");
 
-    /* Versió amb "for"
-    for let(index = 0; index < data.cats.length; index++) {
-        const element = data.cats[index];  
-        htmlStr += `<li>${data.cats[index].name}</li>`
+    function renderCatList() {
+        listElement.innerHTML = data.cats
+            .map((cat, index) => `<li data-index="${index}">${cat.name}</li>`)
+            .join("");
     }
-    document.getElementById("llista").innerHTML = htmlStr
-    */
+
+    function updateCatDisplay() {
+        const selectedCat = data.cats[data.catActive];
+        catNameElement.innerText = selectedCat.name;
+        imgCatElement.src = selectedCat.img;
+        imgCatElement.alt = `${selectedCat.name} cat`;
+        catClicksElement.innerText = `Clicks: ${selectedCat.clicks}`;
+    }
+
+    listElement.addEventListener("click", (event) => {
+        const clickedItem = event.target.closest("li");
+        if (!clickedItem) {
+            return;
+        }
+
+        data.catActive = Number(clickedItem.dataset.index);
+        updateCatDisplay();
+    });
+
+    imgCatElement.addEventListener("click", () => {
+        data.cats[data.catActive].clicks += 1;
+        updateCatDisplay();
+    });
+
+    renderCatList();
+    updateCatDisplay();
 </script>
 
 </html>

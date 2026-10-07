@@ -1,0 +1,164 @@
+<html>
+
+<head>
+    <title>Cat Clicker</title>
+</head>
+
+<body>
+    <h1>Cat Clicker</h1>
+
+    <div class="layout">
+        <ul id="llista"></ul>
+
+        <div class="cat-panel">
+            <h3 id="catName">Cat name</h3>
+            <img id="imgCat" src="" alt="cat image" width="300px">
+            <p id="catClicks">Clicks: 0</p>
+        </div>
+    </div>
+</body>
+
+<script>
+/*
+- model: dades 
+- controlador: rebre informació i distribuir treball
+- vista: pinta coses i escolta, no pot tocar model
+*/
+
+    let data = {
+        catActive: 0,
+        ncats: 4,
+        gatos: [
+            { name: "Garfield", content: "lorem", img: "img/cat1.jpg", clicks: 0 },
+            { name: "Estel", content: "lorem2", img: "img/cat2.avif", clicks: 0 },
+            { name: "Cato", content: "lorem3", img: "img/cat3.avif", clicks: 0 },
+            { name: "Limpa", content: "lorem4", img: "img/cat4.jpg", clicks: 0 }
+        ]
+    };
+
+    let model = {
+        getCats: function () {
+            return data.gatos;
+        },
+        getActiveCat: function () {
+            return data.gatos[data.catActive];
+        },
+        setActiveCat: function (index) {
+            data.catActive = index;
+        },
+        incrementClicks: function () {
+            data.gatos[data.catActive].clicks += 1;
+        }
+    };
+
+    let controller = {
+        init: function () {
+            view.init();
+            view.renderList();
+            view.renderCat();
+        },
+        getCats: function () {
+            return model.getCats();
+        },
+        getActiveCat: function () {
+            return model.getActiveCat();
+        },
+        selectCat: function (index) {
+            model.setActiveCat(index);
+            view.renderCat();
+        },
+        addClick: function () {
+            model.incrementClicks();
+            view.renderCat();
+        }
+    };
+
+    let view = {
+        init: function () {
+            this.listElement = document.getElementById("llista");
+            this.catNameElement = document.getElementById("catName");
+            this.imgCatElement = document.getElementById("imgCat");
+            this.catClicksElement = document.getElementById("catClicks");
+
+            this.listElement.addEventListener("click", function (event) {
+                const item = event.target.closest("li");
+                if (!item) return;
+
+                const index = Number(item.dataset.index);
+                controller.selectCat(index);
+            });
+
+            this.imgCatElement.addEventListener("click", function () {
+                controller.addClick();
+            });
+        },
+        renderList: function () {
+            this.listElement.innerHTML = controller.getCats()
+                .map(function (cat, index) {
+                    return `<li data-index="${index}">${cat.name}</li>`;
+                })
+                .join("");
+        },
+        renderCat: function () {
+            const cat = controller.getActiveCat();
+            this.catNameElement.innerText = cat.name;
+            this.imgCatElement.src = cat.img;
+            this.imgCatElement.alt = `${cat.name} cat`;
+            this.catClicksElement.innerText = `Clicks: ${cat.clicks}`;
+        }
+    };
+
+    controller.init();
+
+/* ANTIC CODI
+const data = {
+        catActive: 0,
+        cats: [
+            { name: "Garfield", img: "img/cat1.jpg", clicks: 0 },
+            { name: "Estel", img: "img/cat2.avif", clicks: 0 },
+            { name: "Cato", img: "img/cat3.avif", clicks: 0 },
+            { name: "Limpa", img: "img/cat4.jpg", clicks: 0 },
+            { name: "Mochi", img: "img/cat1.jpg", clicks: 0 }
+        ]
+    };
+
+    const listElement = document.getElementById("llista");
+    const catNameElement = document.getElementById("catName");
+    const imgCatElement = document.getElementById("imgCat");
+    const catClicksElement = document.getElementById("catClicks");
+
+    function renderCatList() {
+        listElement.innerHTML = data.cats
+            .map((cat, index) => `<li data-index="${index}">${cat.name}</li>`)
+            .join("");
+    }
+
+    function updateCatDisplay() {
+        const selectedCat = data.cats[data.catActive];
+        catNameElement.innerText = selectedCat.name;
+        imgCatElement.src = selectedCat.img;
+        imgCatElement.alt = `${selectedCat.name} cat`;
+        catClicksElement.innerText = `Clicks: ${selectedCat.clicks}`;
+    }
+
+    listElement.addEventListener("click", (event) => {
+        const clickedItem = event.target.closest("li");
+        if (!clickedItem) {
+            return;
+        }
+
+        data.catActive = Number(clickedItem.dataset.index);
+        updateCatDisplay();
+    });
+
+    imgCatElement.addEventListener("click", () => {
+        data.cats[data.catActive].clicks += 1;
+        updateCatDisplay();
+    });
+
+    renderCatList();
+    updateCatDisplay();
+*/
+</script>
+
+</html>
