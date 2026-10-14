@@ -59,11 +59,20 @@ onMounted(() => {
 
 <template>
   <div class="app-shell">
-    <h1>CatClicker 4</h1>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Mini joc</p>
+        <h1>CatClicker</h1>
+      </div>
+
+      <button type="button" class="admin-toggle" @click="openAdmin">
+        Admin
+      </button>
+    </header>
 
     <div class="layout">
       <aside class="sidebar">
-        <h2>Cat names</h2>
+        <h2>Gats</h2>
         <ul class="cat-list">
           <li v-for="(cat, index) in cats" :key="cat.name">
             <button
@@ -72,54 +81,57 @@ onMounted(() => {
               :class="{ active: selectedCatIndex === index }"
               @click="selectCat(index)"
             >
-              {{ cat.name }}
+              <span>{{ cat.name }}</span>
+              <small>{{ cat.clicks }} clics</small>
             </button>
           </li>
         </ul>
       </aside>
 
       <main class="cat-panel">
-
-        <button type="button" class="admin-toggle" @click="openAdmin">
-          Admin
-        </button>
-
         <section v-if="adminVisible" class="admin-panel">
-          <h3>Admin area</h3>
+          <h3>Àrea d'administració</h3>
 
           <label>
-            Name
+            Nom
             <input v-model="adminForm.name" type="text" />
           </label>
 
           <label>
-            URL
+            URL de la imatge
             <input v-model="adminForm.img" type="text" />
           </label>
 
           <label>
-            Clicks
+            Clics
             <input v-model.number="adminForm.clicks" type="number" min="0" />
           </label>
 
           <div class="admin-actions">
-            <button type="button" @click="closeAdmin">Cancel</button>
-            <button type="button" class="save-button" @click="saveCatChanges">Save</button>
+            <button type="button" class="ghost-button" @click="closeAdmin">Cancel·lar</button>
+            <button type="button" class="save-button" @click="saveCatChanges">Guardar</button>
           </div>
         </section>
 
-        <h2>{{ selectedCat.name }}</h2>
-        <img
-          :src="selectedCat.img"
-          :alt="selectedCat.name"
-          class="cat-image" width="300" height="300"
-          @click="incrementClicks"
-        />
-        <p class="click-count">Number of clicks: {{ selectedCat.clicks }}</p>
+        <section class="cat-card">
+          <div class="cat-header">
+            <div>
+              <p class="section-label">Seleccionat</p>
+              <h2>{{ selectedCat.name }}</h2>
+            </div>
+            <span class="score-pill">{{ selectedCat.clicks }} clics</span>
+          </div>
+
+          <img
+            :src="selectedCat.img"
+            :alt="selectedCat.name"
+            class="cat-image"
+            @click="incrementClicks"
+          />
+
+          <p class="click-count">Fes clic a la foto per donar-li més carinyo.</p>
+        </section>
       </main>
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>
